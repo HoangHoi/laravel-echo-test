@@ -21,10 +21,24 @@ Echo.private('chat-room')
 
 $('#send').on('click', function () {
     let message = $('#input').val();
+    $('#input').val('');
     $.ajax({
         url: 'chat',
         type: 'POST',
         dataType: 'json',
-        data: {message: messages},
+        data: {message: message},
     });
+});
+
+$("#input").on('keypress', function(event) {
+    if (event.keyCode == 13) {
+        let message = $('#input').val();
+        $('#input').val('');
+        $.ajax({
+            url: 'chat',
+            type: 'POST',
+            dataType: 'json',
+            data: {message: message},
+        });
+    }
 });

@@ -16,12 +16,10 @@ if (token) {
 
 
 import Echo from 'laravel-echo'
-window.Pusher = require('pusher-js');
+window.io = require('socket.io-client');
 
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: '11f716410294b4f3867d',
     namespace: 'App.Events',
-    cluster: 'ap1',
-    encrypted: true
+    broadcaster: 'socket.io',
+    host: `${window.location.hostname}:9090`
 });
