@@ -18,3 +18,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/chat', function (Illuminate\Http\Request $request) {
+    event(new App\Events\ChatEvent($request->user(), $request->get('message')));
+
+    return [
+        'status' => true,
+    ];
+})->name('chat');

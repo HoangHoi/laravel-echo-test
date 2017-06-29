@@ -1,22 +1,30 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
-window.Vue = require('vue');
+Echo.private('chat-room')
+    .listen('ChatEvent', (event) => {
+        console.log(event);
+        $('#body').append(
+            '<div class="well">' +
+            '<div style="font-weight: bold; padding-bottom: 10px; font-size: 1.2em;">' +
+            '<span>' +
+            event.user.name +
+            '</span>' +
+            '</div>' +
+            '<div>' +
+            '<span>' +
+            event.message +
+            '</span>' +
+            '</div>' +
+            '</div>'
+        );
+    });
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example', require('./components/Example.vue'));
-
-const app = new Vue({
-    el: '#app'
+$('#send').on('click', function () {
+    let message = $('#input').val();
+    $.ajax({
+        url: 'chat',
+        type: 'POST',
+        dataType: 'json',
+        data: {message: messages},
+    });
 });
